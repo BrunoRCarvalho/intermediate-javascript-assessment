@@ -34,20 +34,26 @@
 // In the second .then function you use, assign the third user object
 // to the variable 'thirdUser' (previously declared) and then return the tenth user object.
 
-var firstUser = 'don\'t touch this string!';
-var thirdUser = 'don\'t touch this string, either!';
+var firstUser = "don't touch this string!";
+var thirdUser = "don't touch this string, either!";
 
 function noWeakLink() {
-
   return $http({
-    method: 'GET',
-    url: '/api/users'
+    method: "GET",
+    url: "/api/users"
   })
+    .then(r => {
+      firstUser = r.data[0];
+      return r.data;
+    })
+    .then(response => {
+      thirdUser = response[2];
+      return response[9];
+    })
+    .catch(console.log);
+
   // CODE HERE...
-
 }
-
-
 
 // *************
 // * PROBLEM 2 *
@@ -67,15 +73,14 @@ function noWeakLink() {
 // 'My name is Horton and I am very heavy!' (The above instructions should make this work.  No code needed for this paragraph)
 
 var elephant = {
-  name: 'Horton'
-}
+  name: "Horton"
+};
 function large() {
-
-  return 'My name is ' + this.name + ' and I am very heavy!'
+  return "My name is " + this.name + " and I am very heavy!";
 }
 // CODE HERE...
 
-
+let boundToElephant = large.bind(elephant);
 
 // *************
 // * PROBLEM 3 *
@@ -89,7 +94,10 @@ function large() {
 
 // CODE HERE...
 
-
+function deathStar(capacity, crew) {
+  capacity = capacity.bind(crew);
+  return capacity;
+}
 
 // *************
 // * PROBLEM 4 *
@@ -104,7 +112,11 @@ function large() {
 
 // CODE HERE...
 
-
+function accountingOffice(assets) {
+  return function(liabilities) {
+    return assets + liabilities;
+  };
+}
 
 // *************
 // * PROBLEM 5 *
@@ -129,7 +141,16 @@ function large() {
 
 // CODE HERE...
 
-
+function forgetter(name) {
+  let list = [];
+  return function rememberall(item) {
+    list.push(item);
+    return {
+      name,
+      remember: list
+    };
+  };
+}
 
 // *************
 // * PROBLEM 6 *
